@@ -31,7 +31,7 @@ Configuration Files
 
     Output Configuration: Use JSON format for outputted configuration files or data for easy parsing by computers.
 ---
-#Implementation Details
+# Implementation Details
 Description
 
     Initialize the Go module for CedarHawk.
