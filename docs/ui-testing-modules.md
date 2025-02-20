@@ -95,3 +95,164 @@ Summary Diagram of UI Testing Modules
                 +----------------------+
                 |  Results Generator   |
                 +----------------------+
+
+---
+
+Design: UI Testing Module (UI Elements Validation)
+=========================================
+# 1. Overview
+
+The UI Elements Validation module is responsible for ensuring that essential UI components are present and functioning correctly on a webpage. This includes verifying the existence and behavior of buttons, links, images, and text fields. Additionally, it will detect broken image links and, optionally, validate interactive attributes (e.g., onclick handlers) where specified.
+
+---
+
+# 2. Responsibilities
+
+    Presence Check:
+        Ensure that required UI elements (buttons, links, images, text fields) are present on the page.
+    Functionality Check:
+        Verify that interactive elements (e.g., buttons and links) are correctly configured. For example, check that buttons have an onclick attribute when required.
+    Image Verification:
+        Validate that images load correctly by performing a simple HTTP check on the image source URL using the built-in net/http package.
+    Reporting:
+        Generate detailed output for each check, indicating success or failure along with relevant error messages.
+
+---
+
+# 3. Architecture and Data Flow
+Component Interactions
+
+    Input Data:
+        Receives pre-parsed HTML/DOM data from the Crawler Module.
+        Retrieves validation rules and criteria from the configuration (loaded by the Configuration Loader).
+
+    Processing:
+        Iterates over the DOM to locate UI elements.
+        For each element type:
+            Buttons: Check for existence and inspect interactive attributes like onclick if required.
+            Links: Verify that a valid href attribute is present.
+            Images: Confirm that each image element has a valid src attribute. Perform an HTTP GET request to detect broken links.
+            Text Fields: Ensure text fields are present and optionally check for expected attributes (e.g., placeholder text).
+
+    Output Data:
+        Compiles results into a structured JSON format indicating:
+            Element type
+            Check status (pass/fail)
+            Error details (e.g., "Missing element," "Broken link," "Missing onclick attribute")
+            Additional metadata (e.g., element identifier or location)
+
+Data Flow Diagram
+
+                +----------------------+
+                |  Crawler Module      |
+                | (HTML/DOM Extraction)|
+                +----------+-----------+
+                           |
+                           v
+              +------------+------------+
+              | UI Elements Validation  |
+              |        Module           |
+              +------------+------------+
+                           |
+                           v
+              +------------+------------+
+              |   JSON Results Output   |
+              +-------------------------+
+
+---
+
+# 4. Implementation Strategy
+Step-by-Step Process
+
+    Element Extraction:
+        Use DOM traversal (e.g., via Go's golang.org/x/net/html or a built-in parser approach) to iterate through the HTML.
+    Validation Checks:
+        Buttons:
+            Confirm at least one button is present.
+            Optionally, if the configuration specifies, ensure the button has an onclick attribute.
+        Links:
+            Verify that links have a non-empty href attribute.
+        Images:
+            For each <img> element, check for the src attribute.
+            Use net/http to perform a GET request on the image URL to ensure it returns a valid response (e.g., status code 200).
+        Text Fields:
+            Ensure that input fields of type text (or similar) are present.
+    Error Handling:
+        For each check, if the expected condition is not met, record a detailed error message.
+        Handle HTTP errors for images gracefully, marking an image as broken if the GET request fails or returns a non-success status code.
+        Aggregate all error messages with clear identifiers (e.g., element type, index, or CSS selector) to help pinpoint issues.
+
+---
+
+# 5. Expected Behavior
+
+    Successful Validation:
+        The module reports a “pass” status for each element type if all validations succeed.
+        A summary message indicates that all required UI elements were found and function as expected.
+    Failure Cases:
+        Missing Elements: Report which required UI element (button, link, image, text field) is absent.
+        Broken Links/Images: Report the URL and error received (e.g., HTTP status code) for any broken image link.
+        Missing Interactive Attributes: If enabled in configuration, report elements (such as buttons) that are missing expected interactive attributes like onclick.
+        Each error is documented with its location (e.g., page URL or element identifier) to facilitate troubleshooting.
+
+---
+
+# 6. Error Reporting Strategy
+
+    Structured JSON Output:
+        The module will produce a JSON report with an array of check results. Each entry includes:
+            elementType: "button", "link", "image", "textField"
+            status: "pass" or "fail"
+            message: Detailed error message if the check fails.
+            elementIdentifier: (Optional) Specific identifier or index for the element.
+
+    Example JSON Snippet:
+
+{
+  "page": "https://example.com",
+  "uiElements": [
+    {
+      "elementType": "button",
+      "status": "pass",
+      "message": "Button found with valid onclick attribute.",
+      "elementIdentifier": "btn-submit"
+    },
+    {
+      "elementType": "image",
+      "status": "fail",
+      "message": "Image source returned HTTP 404: https://example.com/img/logo.png",
+      "elementIdentifier": "img-logo"
+    },
+    {
+      "elementType": "link",
+      "status": "pass",
+      "message": "Link contains valid href attribute.",
+      "elementIdentifier": "a-home"
+    }
+  ]
+}
+
+    Error Logging:
+        In addition to the JSON output, errors will be logged using the Logging Module, allowing for real-time diagnostics during test execution.
+
+---
+
+# 7. Sample Checks and Strategies
+
+    Button Check:
+        Check: Ensure at least one <button> or <input type="button"> is present.
+        Optional: If required by config, check that the button contains an onclick attribute.
+        Error: "No button found" or "Button missing onclick attribute."
+
+    Link Check:
+        Check: Validate that <a> tags have a non-empty href attribute.
+        Error: "Link with empty href found."
+
+    Image Check:
+        Check: Verify <img> tags have a src attribute.
+        HTTP Check: Use a GET request on the src URL and check for a 200 response.
+        Error: "Broken image detected with src: [URL] (HTTP 404)."
+
+    Text Field Check:
+        Check: Validate presence of <input> elements with type text or <textarea>.
+        Error: "Required text field missing."
