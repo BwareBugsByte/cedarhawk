@@ -2,7 +2,7 @@ Design: Configuration File Handling
 ======
 # 1. Overview
 
-The Configuration File Handling module is responsible for reading and parsing the user-generated configuration file written in TOML format. Due to the constraint of using only built-in Go packages, a minimal custom parser will be implemented to support a subset of TOML features required by CedarHawk.
+The Configuration File Handling module is responsible for reading and parsing the user-generated configuration file written in TOML format.
 
 ---
 
@@ -84,18 +84,7 @@ Step-by-Step Approach
 
 ---
 
-# 5. Utilization of Built-In Go Packages
-
-Since there is no native TOML parser in the standard library, the following built-in packages will be used for custom parsing:
-
-    File Operations: os, bufio for reading the file line by line.
-    String Manipulation: strings package to trim whitespace and split key-value pairs.
-    Error Handling: Standard error checking idioms in Go.
-    Data Conversion: strconv for converting string values to integers or other types.
-
----
-
-# 6. Data Flow Diagram
+# 5. Data Flow Diagram
 
               +------------------------+
               |    User config.toml    |
@@ -103,7 +92,7 @@ Since there is no native TOML parser in the standard library, the following buil
                           |
                           v
               +-----------+-----------+
-              | Configuration Loader  |  <-- Custom TOML Parser using bufio, strings, etc.
+              | Configuration Loader  | 
               +-----------+-----------+
                           |
                           v
