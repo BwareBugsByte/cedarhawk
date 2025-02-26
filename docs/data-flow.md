@@ -8,24 +8,24 @@ High-Level Data Flow Diagram
                            |
          +-----------------+-----------------+
          |                                   |
-+--------v---------+                +--------v---------+
-| Configuration    |                | Logging & Error  |
-| Loader           |                | Handling Module  |
-+--------+---------+                +--------+---------+
+    +--------v---------+                +--------v---------+
+    | Configuration    |                | Logging & Error  |
+    | Loader           |                | Handling Module  |
+    +--------+---------+                +--------+---------+
          |                                   |
          v                                   |
-+--------+---------+                         |
-|  Crawler Module  |<------------------------+
-| (Fetch & Parse   |
-| HTML Pages)      |
-+--------+---------+
+    +--------+---------+                         |
+    |  Crawler Module  |<------------------------+
+    | (Fetch & Parse   |
+    | HTML Pages)      |
+    +--------+---------+
          |
          v
-+--------+---------+   +----------------+   +----------------+
-| Layout           |   | UI Elements    |   | Responsiveness |
-| Verification     |   | Validation     |   | Testing Module |
-| Module           |   | Module         |   |                |
-+--------+---------+   +----------------+   +----------------+
+    +--------+---------+   +----------------+   +----------------+
+    | Layout           |   | UI Elements    |   | Responsiveness |
+    | Verification     |   | Validation     |   | Testing Module |
+    | Module           |   | Module         |   |                |
+    +--------+---------+   +----------------+   +----------------+
          |                         |                |
          +------------+------------+----------------+
                       |
