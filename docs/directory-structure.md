@@ -4,31 +4,31 @@ Design: Project Directory Structure and File Organization
 
 The CedarHawk repository is organized into several key directories, each with a well-defined purpose. Below is the proposed structure:
 
-CedarHawk/
-├── cmd/
-│   └── main.go                  # Main entry point for the application
-├── internal/
-│   ├── config/
-│   │   └── config.go            # Configuration loader and parser (TOML)
-│   ├── crawler/
-│   │   └── crawler.go           # Recursive website crawler module
-│   ├── ui/
-│   │   ├── layout.go            # UI testing: Layout Verification module
-│   │   ├── elements.go          # UI testing: UI Elements Validation module
-│   │   └── responsiveness.go    # UI testing: Responsiveness Testing module
-│   ├── results/
-│   │   └── results.go           # JSON results aggregation and generation
-│   ├── logging/
-│   │   └── logging.go           # Unified logging and error handling
-│   └── ai/
-│       └── ai.go                # Placeholder for future AI Plugin integration
-├── configs/
-│   └── config.toml              # Sample user configuration file
-├── tests/
-│   └── <various test files>     # Unit and integration tests
-└── docs/
-    ├── architecture.md          # System architecture overview documentation
-    └── directory-structure.md   # Detailed project directory and naming conventions documentation
+    CedarHawk/
+    ├── cmd/
+    │   └── main.go                  # Main entry point for the application
+    ├── internal/
+    │   ├── config/
+    │   │   └── config.go            # Configuration loader and parser (TOML)
+    │   ├── crawler/
+    │   │   └── crawler.go           # Recursive website crawler module
+    │   ├── ui/
+    │   │   ├── layout.go            # UI testing: Layout Verification module
+    │   │   ├── elements.go          # UI testing: UI Elements Validation module
+    │   │   └── responsiveness.go    # UI testing: Responsiveness Testing module
+    │   ├── results/
+    │   │   └── results.go           # JSON results aggregation and generation
+    │   ├── logging/
+    │   │   └── logging.go           # Unified logging and error handling
+    │   └── ai/
+    │       └── ai.go                # Placeholder for future AI Plugin integration
+    ├── configs/
+    │   └── config.toml              # Sample user configuration file
+    ├── tests/
+    │   └── <various test files>     # Unit and integration tests
+    └── docs/
+        ├── architecture.md          # System architecture overview documentation
+        └── directory-structure.md   # Detailed project directory and naming conventions documentation
 
 Explanation:
 
