@@ -40,3 +40,4 @@ func RunResponsivenessTests(htmlData string, viewports []config.Viewport) []resu
 
 	return resultsSlice
 }
+
