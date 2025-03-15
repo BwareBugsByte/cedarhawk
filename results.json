@@ -1,0 +1,58 @@
+{
+  "page": "http://itsecgames.com/",
+  "layoutResults": [
+    {
+      "page": "",
+      "status": "fail",
+      "message": "Missing expected elements: \u003cheader, \u003cnav, \u003cmain, \u003cfooter"
+    }
+  ],
+  "uiElementsResults": [
+    {
+      "elementType": "button",
+      "status": "fail",
+      "message": "No buttons found."
+    },
+    {
+      "elementType": "link",
+      "status": "fail",
+      "message": "No links found."
+    },
+    {
+      "elementType": "image",
+      "status": "fail",
+      "message": "No images found."
+    },
+    {
+      "elementType": "textField",
+      "status": "fail",
+      "message": "No text fields found."
+    }
+  ],
+  "responsivenessResults": [
+    {
+      "viewport": "desktop",
+      "status": "fail",
+      "issues": [
+        "Expected responsive marker 'desktop-responsive' not found."
+      ]
+    },
+    {
+      "viewport": "tablet",
+      "status": "fail",
+      "issues": [
+        "Expected responsive marker 'tablet-responsive' not found."
+      ]
+    },
+    {
+      "viewport": "mobile",
+      "status": "fail",
+      "issues": [
+        "Expected responsive marker 'mobile-responsive' not found."
+      ]
+    }
+  ],
+  "aiAnalysis": {
+    "summary": "AI analysis not available."
+  }
+}
