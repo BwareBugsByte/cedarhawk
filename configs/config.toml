@@ -1,5 +1,5 @@
 # Sample configuration for CedarHawk
-startURL = "https://example.com"
+startURL = "http://itsecgames.com/"
 maxDepth = 3
 resultsFile = "results.json"
 
