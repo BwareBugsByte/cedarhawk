@@ -1,0 +1,44 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  release:
+    types: [created]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.20'
+
+      - name: Install dependencies
+        run: go mod tidy
+
+      - name: Run tests
+        run: go test -v ./...
+
+      - name: Build binaries
+        run: make build
+
+      - name: Package release artifacts
+        run: make release
+
+      - name: Upload Release Artifacts
+        if: github.event_name == 'release'
+        uses: actions/upload-artifact@v3
+        with:
+          name: cedarhawk-release
+          path: release/
+
