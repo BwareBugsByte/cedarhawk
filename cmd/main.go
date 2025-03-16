@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"os"
 	"time"
@@ -13,12 +14,44 @@ import (
 	"cedarhawk/internal/ui"
 )
 
+// customUsage defines the help message displayed when --help is used.
+func customUsage() {
+	usageText := `
+CedarHawk - Automated Website Functionality Testing Tool
+
+Usage:
+  cedarhawk [options]
+
+Options:
+  --config       Path to configuration file (default: configs/config.toml)
+  --crawl-only   Run only the crawler module
+  --ui-only      Run only the UI tests
+  --help         Display this help message
+
+Description:
+  CedarHawk tests the functionality of a website by performing crawling, UI tests (layout, elements, and responsiveness),
+  and optionally invoking an AI analysis plugin. The tool outputs a consolidated JSON report summarizing all test results.
+
+For detailed documentation, please refer to the /docs folder.
+`
+	fmt.Fprintf(os.Stderr, "%s\n", usageText)
+}
+
 func main() {
+	// Override the default usage function.
+	flag.Usage = customUsage
+
 	// Define command-line flags.
 	configFile := flag.String("config", "configs/config.toml", "Path to configuration file")
 	crawlOnly := flag.Bool("crawl-only", false, "Run only the crawler module")
 	uiOnly := flag.Bool("ui-only", false, "Run only the UI tests")
 	flag.Parse()
+
+	// If help flag is provided, display usage and exit.
+	if flag.NArg() == 0 && (len(os.Args) > 1 && os.Args[1] == "--help") {
+		flag.Usage()
+		os.Exit(0)
+	}
 
 	// Load configuration.
 	cfg, err := config.LoadConfig(*configFile)
